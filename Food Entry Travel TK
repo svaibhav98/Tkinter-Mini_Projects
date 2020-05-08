@@ -1,0 +1,100 @@
+
+
+from tkinter import *
+import tkinter.messagebox as tmsg
+
+
+
+def order():
+    print("Order received")
+    tmsg.showinfo("Order Received!",  f"We have received your order for {Dish.get()}. Thanks for ordering")
+
+def getvals():
+    print("Form Submitted! ")
+#fetching value from user//
+    print(f"{namevalue.get(), phonevalue.get(), gendervalue.get(), emergencyvalue.get(), paymentmodevalue.get(), foodservicevalue.get(),Dish.get()} ")
+
+#storing values
+    with open("Traveller Data and order.txt", "a") as f:        #write method with append
+        f.write(f"{namevalue.get(), phonevalue.get(), gendervalue.get(), emergencyvalue.get(), paymentmodevalue.get(), foodservicevalue.get()}\n ")
+
+
+
+root = Tk()
+root.geometry("550x554")
+root.title("My GUI By Vaibhavs")
+root.configure(background="light blue")
+root.wm_iconbitmap("travel.ico")
+#Heading
+Label(root, text="Welcome to Vaibhav Travels", font="chiller 32 bold",fg= "black",bg="light blue", pady=15).grid(row=0, column=2)
+
+#Text for our form
+name = Label(root, text="Name",bg="light blue")
+phone = Label(root, text="Phone",bg="light blue")
+gender = Label(root, text="Gender",bg="light blue")
+emergency = Label(root, text="Emergency Contact",bg="light blue")
+paymentmode = Label(root, text="Payment Mode",bg="light blue")
+
+#Pack text for our form
+name.grid(row=1, column=1)
+phone.grid(row=2, column=1)
+gender.grid(row=3, column=1)
+emergency.grid(row=4, column=1,padx=5)
+paymentmode.grid(row=5, column=1)
+
+# Tkinter variable for storing entries
+namevalue = StringVar()
+phonevalue = StringVar()
+gendervalue = StringVar()
+emergencyvalue = StringVar()
+paymentmodevalue = StringVar()
+foodservicevalue = IntVar()
+
+
+#Entries for our form
+nameentry = Entry(root, textvariable=namevalue)
+phoneentry = Entry(root, textvariable=phonevalue)
+genderentry = Entry(root, textvariable=gendervalue)
+emergencyentry = Entry(root, textvariable=emergencyvalue)
+paymentmodeentry = Entry(root, textvariable=paymentmodevalue)
+
+# Packing the Entries
+nameentry.grid(row=1, column=2)
+phoneentry.grid(row=2, column=2)
+genderentry.grid(row=3, column=2)
+emergencyentry.grid(row=4, column=2)
+paymentmodeentry.grid(row=5, column=2)
+
+foodservice = Checkbutton(text="Want to prebook your meals?",bg="light blue", variable = foodservicevalue)  #if check box is tick then op will be 1
+foodservice.grid(row=6, column=2, pady=10)
+
+
+# var = IntVar()
+# var.set(1)
+Dish = StringVar()
+Dish.set("No Order of food")          #need to set the value otherwise sabpe dot rahega
+
+Label(root, text = "What would you like to have Sir!?",font="lucida 10 bold",justify=LEFT,bg="light blue", padx=0,pady=10).grid(column=2)
+
+radio = Radiobutton(root, text="Chicken", variable=Dish, value="Chicken",bg="light blue").grid(column=1)
+radio = Radiobutton(root, text="Mutton", variable=Dish, value="Mutton",bg="light blue").grid(column=1)
+radio = Radiobutton(root, text="Paratha", variable=Dish, value="Paratha",bg="light blue").grid(column=1)
+radio = Radiobutton(root, text="Samosa ",  variable=Dish, value="Samosa",bg="light blue").grid(column=1)
+
+
+#Order now button
+Button(text="Order Now",font="lucida 9 bold",bg= "black",fg="red",command=order ).grid(row=15,column=1,pady=10)
+
+#Submit button
+Button(text="Submit to Vaibhav Travels",font="Segoe  11 bold",bg= "black",fg="white", command=getvals).grid( column=2, pady=12)
+
+
+#adding menu
+mainmenu = Menu(root)
+
+# to add single menu >>
+mainmenu.add_command(label="Exit", command=quit)
+root.config(menu=mainmenu)
+
+
+root.mainloop()
